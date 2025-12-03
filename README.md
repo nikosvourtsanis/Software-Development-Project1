@@ -129,7 +129,7 @@ MNIST — IVFPQ
 -ivfpq -M 16 -nbits 8 -N 1 -R 2000 -range false
 
 SIFT Dataset
-./search -d data/sift_base.fvecs -q data/sift_query.fvecs -type sift \
+./search -d data/sift/sift_base.fvecs -q data/sift/sift_query.fvecs -type sift \
 -lsh -k 4 -L 5 -w 4.0 -N 1 -R 2 -range false
 
 
