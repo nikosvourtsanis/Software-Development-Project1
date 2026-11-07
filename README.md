@@ -1,117 +1,63 @@
 # Approximate Nearest Neighbor Search  
 ### LSH • Hypercube • IVFFlat • IVFPQ
 
-## Ομάδα Εργασίας
-- **Νίκος Βουρτσανής — sdi2200022**
-- **Κωνσταντίνος Φαγογένης — sdi2100199**
+## Project Team
+- **Nikos Vourtsanis — sdi2200022**
+- **Konstantinos Fagogenis — sdi2100199**
 
 ---
 
-## Περιγραφή Έργου
+## Project Description
 
-Το έργο αποτελεί την **1η εργασία** του μαθήματος *Ανάπτυξη Λογισμικού για Αλγοριθμικά Προβλήματα* και αφορά την υλοποίηση και σύγκριση τεχνικών για **Approximate Nearest Neighbor Search (ANN)**.
+The project is the **1st assignment** of the course *Software Development for Algorithmic Problems* and deals with the implementation and comparison of techniques for **Approximate Nearest Neighbor Search (ANN)**.
 
-Υλοποιούνται και συγκρίνονται οι παρακάτω μέθοδοι:
+The following methods are implemented and compared:
 
-| Μέθοδος | Περιγραφή |
+| Method | Description |
 |--------|-----------|
-| **LSH (Locality Sensitive Hashing)** | Gaussian προβολές, πολλαπλά hash tables |
-| **Hypercube Hashing** | Προβολή σε δυαδικό hypercube και εξερεύνηση κορυφών (probes) |
-| **IVFFlat (Inverted File + Flat Quantization)** | K-means Clustering + inverted lists + αναζήτηση σε nprobe clusters |
-| **IVFPQ (Inverted File + Product Quantization)** | IVFFlat + Product Quantization (διαχωρισμός σε M υποδιανύσματα, 2^nbits centroids) |
+| **LSH (Locality Sensitive Hashing)** | Gaussian projections, multiple hash tables |
+| **Hypercube Hashing** | Projection onto a binary hypercube and exploration of vertices (probes) |
+| **IVFFlat (Inverted File + Flat Quantization)** | K-means Clustering + inverted lists + search in nprobe clusters |
+| **IVFPQ (Inverted File + Product Quantization)** | IVFFlat + Product Quantization (splitting into M subvectors, 2^nbits centroids) |
 
-Το σύστημα υποστηρίζει:
+The system supports:
 
-- ✅ K-Nearest Neighbors Search (KNN)
-- ✅ Range Search (με ακτίνα **R**)
+- K-Nearest Neighbors Search (KNN)
+- Range Search (with radius **R**)
 
 Datasets:
 
 - **MNIST**
-- **SIFT1M**
+- **SIFT**
 
 ---
 
-## Μετρικές Απόδοσης
+## Performance Metrics
 
-Το πρόγραμμα υπολογίζει:
+The program computes:
 
-- **Recall@N** — ποσοστό πραγματικών κοντινότερων γειτόνων που βρέθηκαν
-- **Approximation Factor (AF)** — αναλογία απόστασης approx/true
-- **QPS (Queries per Second)** — ερωτήματα ανά δευτερόλεπτο
-- **tApprox / tTrue** — χρόνοι προσεγγιστικής & ακριβούς αναζήτησης
+- **Recall@N** — percentage of true nearest neighbors found
+- **Approximation Factor (AF)** — approx/true distance ratio
+- **QPS (Queries per Second)** — queries per second
+- **tApprox / tTrue** — approximate & exact search times
 
-Αποτελέσματα αποθηκεύονται στο `docs/report/results/`
+Results are stored in `docs/report/results/`
 
 ---
 
-## Δομή Φακέλων
+## Compilation
 
-Software-Development-Project1/
-├── include/
-│ ├── vector_utils.h  #Διανυσματικές πράξεις (dot product, L2 distance, randoms)
-│ ├── lsh.h # Ορισμοί LSH
-│ ├── hypercube.h  # Ορισμοί Hypercube hashing
-│ ├── ivf_flat.hpp   # Ορισμοί IVFFlat (k-means + inverted lists)
-│ ├── ivf_pq.hpp   # Ορισμοί IVFPQ (Product Quantization + IVF)
-│ ├── dataset_io.hpp   # Συναρτήσεις φόρτωσης data
-│ └── bruteForce.h    # Ακριβής KNN αναζήτηση για ground truth
-├── src/
-│ ├── vector_utils.cpp
-│ ├── lsh.cpp
-│ ├── hypercube.cpp
-│ ├── ivf_flat.cpp
-│ ├── ivf_pq.cpp
-│ ├── bruteForce.cpp
-│ └── main.cpp  #main πρόγραμμα
-├── data/
-│ ├── train-images.idx3-ubyte
-│ ├── t10k-images.idx3-ubyte
-│ ├── sift_base.fvecs
-│ └── sift_query.fvecs
-├── docs/report/
-│ ├── auto_exper_lsh.sh  #τα παρακάτω scripts παράγουν τα πειράματα 
-│ ├── auto_exper_lsh_sift.sh  #τα αποτελέσματα των οπoίων αποθηκεύονται σε csv αρχεία από όπου αντλούνται οι πληροφορίες για τα plots
-│ ├── auto_exper_hypercube.sh
-│ ├── auto_exper_hypercube_sift.sh
-│ ├── auto_exper_ivfflat.sh
-│ ├── auto_exper_ivfflat_sift.sh
-│ ├── auto_exper_ivfpq.sh
-│ ├── plot_commands.gp  #εντολές για τα plot
-│ ├── plot_res
-│ ├── plot_res.cpp  
-│ ├── figs/  #plots
-│ ├── report.md 
-│ └── results/
-│ ├── lsh_output.txt  #τα κάτωθι .txt είναι τα αποτελέσματα στην μορφή που ζητήθηκαν στην εκφώνηση
-│ ├── hypercube_output.txt
-│ ├── ivfflat_output.txt
-│ ├── ivfpq_output.txt
-│ ├── lsh.csv
-│ ├── hypercube.csv
-│ ├── ivfflat.csv
-│ ├── ivfpq.csv
-│ ├── tmp_*.txt
-└── tests/
-├── test_lsh.cpp
-├── test_hypercube.cpp
-├── test_ivf.cpp
-└── test_ivfpq.cpp
----
-
-## Μεταγλώττιση
-
-### Με `make`
+### With `make`
 ```bash
 make
 
+or 
 
-#χειροκίνητα
 g++ -O3 -std=c++17 -Iinclude \
 src/vector_utils.cpp src/lsh.cpp src/hypercube.cpp \
 src/ivf_flat.cpp src/ivf_pq.cpp src/bruteForce.cpp src/main.cpp -o search
 
-Παραδείγματα Εκτέλεσης
+Execution Examples
 MNIST — LSH
 ./search -d data/train-images.idx3-ubyte -q data/t10k-images.idx3-ubyte -type mnist \
 -lsh -k 4 -L 5 -w 4.0 -N 1 -R 2000 -range false
@@ -128,12 +74,12 @@ MNIST — IVFPQ
 ./search -d data/train-images.idx3-ubyte -q data/t10k-images.idx3-ubyte -type mnist \
 -ivfpq -M 16 -nbits 8 -N 1 -R 2000 -range false
 
-SIFT Dataset
-./search -d data/sift/sift_base.fvecs -q data/sift/sift_query.fvecs -type sift \
+SIFT Dataset (has some errors)
+./search -d data/sift_base.fvecs -q data/sift_query.fvecs -type sift \
 -lsh -k 4 -L 5 -w 4.0 -N 1 -R 2 -range false
 
 
-Μορφή Εξόδου
+Output Format
 
 Query:
 NearestNeighbor-1:
@@ -145,8 +91,8 @@ QPS:
 tApproximateAverage:
 tTrueAverage:
 
-Σημειώσεις
+Notes
 
-Τα plots παράγονται μέσω Gnuplot (βλέπε plot_commands.gp)
+The plots are generated via Gnuplot (plot_commands.gp)
 
-CSV αρχεία αποτελεσμάτων: docs/report/results/*.csv
+CSV result files: docs/report/results/*.csv
